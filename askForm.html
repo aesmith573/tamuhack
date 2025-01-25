@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html>
-
-
+<body>
 <p>Please input amount with cents included. (For example, 135.89)</p>
 
-<form>
+    <form>
+        <label for ="MonthIncome">How much money have you received this month?</label>
+        <input type ="text" id="MonthIncome" name ="MonthIncome"><br><br>
 
-<label for ="SavingsD">Savings Deposit? $</label>
-<input type ="text" id="SavingsD">
+        <!-- <label for ="expenses">How much of your income do you need towards expenses? </label>
+        <input type ="text" id="expenses" name ="expenses"><br> -->
 
-<label for = "SavingsW">Savings Withdraw? $</label>
-<input type ="text" id = "SavingsW"><br><br>
+        <label for ="savings">How much of your income do you want towards savings in general? </label>
+        <input type ="text" id="savings" name ="savings">
+    <!-- make a var to hold the total amount they can spend to check if they go over in the different categories -->
 
-<label for ="CheckingsD">Checkings Deposit? $</label>
-<input type="text" id="CheckingsD">
+<button type="button" onclick ="calculation()">Calculate</button>
+    </form>
+<br><br>
 
-<label for = "CheckingsW">Checkings Withdraw? $</label>
-<input type="text" id="CheckingsW">
+<!-- <p>Please input in percentages. (For example, for 40% input 40) </p> -->
+<p id="leftover"></p>
 
-</form>
+<!-- leftover id if they don't use all the money towards savings or expenses -->
 
+<script src="script.js"></script>
 
-
-
-
+</body>
 </html>
