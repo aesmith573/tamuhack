@@ -27,10 +27,10 @@ def signup():
         password = request.form['password']
         
         if User.query.filter_by(email=email).first():
-            flash('Email already exists.', 'danger')
-            return redirect(url_for('signup'))
+           flash('Email already exists.', 'danger')
+           return redirect(url_for('signup'))
 
-        hashed_password = generate_password_hash(password, method='sha256')
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
         new_user = User(username=username, email=email, password=hashed_password)
 
         db.session.add(new_user)
@@ -64,5 +64,5 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    db.create_all()
+    # db.create_all()
     app.run(debug=True)
