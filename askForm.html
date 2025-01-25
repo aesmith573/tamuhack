@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html>
 <body>
-<p>Please input amount with cents included. (For example, 135.89)</p>
+<p>Please input amount. (For example, 135.89)</p>
 
     <form>
         <label for ="MonthIncome">How much money have you received this month?</label>
         <input type ="text" id="MonthIncome" name ="MonthIncome"><br><br>
+        
 
-        <!-- <label for ="expenses">How much of your income do you need towards expenses? </label>
-        <input type ="text" id="expenses" name ="expenses"><br> -->
+        <label for ="NumBills">How many bills do you have to pay?</label>
+        <input type ="number" id="NumBills" name ="NumBills" min="1" placeholder ="Enter a number">
 
+        <div class="numContain" id="numContain"></div>
+
+        <br><br>
         <label for ="savings">How much of your income do you want towards savings in general? </label>
-        <input type ="text" id="savings" name ="savings">
+        <input type ="text" id="savings" name ="savings"><br><br>
     <!-- make a var to hold the total amount they can spend to check if they go over in the different categories -->
 
+
+    <label for="goalName">What is your savings goal?</label>
+    <input type="text" id="goalName" name="goalName" placeholder="Vacation, Emergency Fund, etc."><br><br>
+
+    <label for="goalAmount">Goal Amount:</label>
+    <input type="number" id="goalAmount" name="goalAmount" placeholder="Enter goal amount"><br><br> 
+    
 <button type="button" onclick ="calculation()">Calculate</button>
     </form>
 <br><br>
