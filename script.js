@@ -3,7 +3,7 @@ let chart;
 
 function calculation() {
     const MonthIncome = parseFloat(document.getElementById('MonthIncome').value);
-    const totalSavings = parseFloat(document.getElementById('savings').value); // Total savings input
+    const totalSavings = parseFloat(document.getElementById('savings').value);
   
     if (isNaN(MonthIncome) || isNaN(totalSavings) || MonthIncome < 0 || totalSavings < 0) {
         document.getElementById('leftover').innerText = "Please enter valid numbers for income and savings.";
@@ -50,12 +50,16 @@ function calculation() {
         }
     }
   
-    // Check if sub-goals exceed total savings
-    if (savingsGoalsTotal > totalSavings) {
-        document.getElementById('leftover').innerText = `The total of your savings goals exceeds your total savings limit of $${totalSavings.toFixed(2)}. Please adjust your goals.`;
+    // Check if sub-goals match total savings
+    if (savingsGoalsTotal !== totalSavings) {
+        const difference = totalSavings - savingsGoalsTotal;
+        document.getElementById('leftover').innerText = 
+            `The total of your savings goals ($${savingsGoalsTotal.toFixed(2)}) 
+            does not match your total savings allocation ($${totalSavings.toFixed(2)}).
+            You need to ${difference > 0 ? "allocate more" : "reduce the goals"} by $${Math.abs(difference).toFixed(2)}.`;
         return;
     }
-  
+
     // Calculate leftover money
     const leftover = MonthIncome - totalBillCost - totalSavings;
 
@@ -65,10 +69,13 @@ function calculation() {
         document.getElementById('leftover').innerText = `You have $${leftover.toFixed(2)} left to budget.`;
     }
 
-    // Generate chart
-    generateChart(billCategories, billAmounts, totalSavings, savingsCategories, savingsAmounts);
+    // Generate main chart (bills and overall savings)
+    generateChart(billCategories, billAmounts, totalSavings);
+
+    // Generate separate savings breakdown chart
     generateSavingsChart(savingsCategories, savingsAmounts);
 }
+
 
 
   // Function to create or update the chart
@@ -166,7 +173,10 @@ function calculation() {
               plugins: {
                   legend: { position: 'top' },
                   tooltip: { enabled: true }
-              }
+              },
+              title: {
+                display: true, // Enable the title
+                text: 'Savings Breakdown by Goal', }
           }
       });
   }
