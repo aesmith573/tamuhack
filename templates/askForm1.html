@@ -2,47 +2,49 @@
 
 {% block content %}
 
-
-<!DOCTYPE html>
-<html>
 <body>
 <p>Please input amount. (For example, 135.89)</p>
 
-    <form>
-        <label for ="MonthIncome">How much money have you received this month?</label>
-        <input type ="text" id="MonthIncome" name ="MonthIncome"><br><br>
-        
+    <<form method="POST" action="/setbudget">
+    <label for="MonthIncome">How much money have you received this month?</label>
+    <input type="text" id="MonthIncome" name="MonthIncome" value="{{ income }}"><br><br>
 
-        <label for ="NumBills">How many bills do you have to pay?</label>
-        <input type ="number" id="NumBills" name ="NumBills" min="1" placeholder ="Enter a number">
+    <label for="NumBills">How many bills do you have to pay?</label>
+    <input type="number" id="NumBills" name="NumBills" min="1" value="{{ bills|length }}" placeholder="Enter a number" required>
+    <div class="numContain" id="numContain">
+        {% for bill_name, bill_cost in bills.items() %}
+            <label for="{{ loop.index }}BillName">Bill {{ loop.index }} Name:</label>
+            <input type="text" id="{{ loop.index }}BillName" name="{{ loop.index }}BillName" value="{{ bill_name }}">
+            <label for="{{ loop.index }}BillCost">Bill {{ loop.index }} Cost:</label>
+            <input type="text" id="{{ loop.index }}BillCost" name="{{ loop.index }}BillCost" value="{{ bill_cost }}">
+        {% endfor %}
+    </div>
 
-        <div class="numContain" id="numContain"></div>
+    <br><br>
+    <label for="savings">How much of your income do you want towards savings in general? </label>
+    <input type="text" id="savings" name="savings" value="{{ savings }}"><br><br>
 
-        <br><br>
-        <label for ="savings">How much of your income do you want towards savings in general? </label>
-        <input type ="text" id="savings" name ="savings"><br><br>
-    <!-- make a var to hold the total amount they can spend to check if they go over in the different categories -->
+    <label for="numSavings">How many categories do you want to split your savings into?</label>
+    <input type="number" id="numSavings" name="numSavings" min="1" value="{{ goals|length }}" placeholder="Enter a number" required>
+    <div class="saveContain" id="saveContain">
+        {% for goal_name, goal_cost in goals.items() %}
+            <label for="{{ loop.index }}saveName">Goal {{ loop.index }} Name:</label>
+            <input type="text" id="{{ loop.index }}saveName" name="{{ loop.index }}saveName" value="{{ goal_name }}">
+            <label for="{{ loop.index }}saveCost">Goal {{ loop.index }} Cost:</label>
+            <input type="text" id="{{ loop.index }}saveCost" name="{{ loop.index }}saveCost" value="{{ goal_cost }}">
+        {% endfor %}
+    </div>
 
-
-    <label for="goalName">What is your savings goal?</label>
-    <input type="text" id="goalName" name="goalName" placeholder="Vacation, Emergency Fund, etc."><br><br>
-
-    <label for="goalAmount">Goal Amount:</label>
-    <input type="number" id="goalAmount" name="goalAmount" placeholder="Enter goal amount"><br><br> 
-    
-<button type="button" onclick ="calculation()">Calculate</button>
-    </form>
+    <button type='submit'>Submit</button>
+    <button type="button" onclick="calculation()">Calculate</button>
+</form>
 <br><br>
 
-
-<!-- <p>Please input in percentages. (For example, for 40% input 40) </p> -->
 <p id="leftover"></p>
 
-<!-- leftover id if they don't use all the money towards savings or expenses -->
+<canvas id="expenseChart" width="400" height="200"></canvas>
+<canvas id="savingsChart" width="400" height="200"></canvas>
 
 <script src="../static/script.js"></script>
-
-
 </body>
-</html>
 {% endblock %}

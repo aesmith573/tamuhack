@@ -19,6 +19,13 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
 
+class UserFinances(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    income = db.Column(db.Integer, unique=True, nullable=False)
+    savings = db.Column(db.Integer, unique=True, nullable=False)
+    bills = db.Column(db.String(150), unique=True, nullable=False)
+    goals = db.Column(db.String(200), nullable=False)
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -79,8 +86,30 @@ def logout():
 def profile():
     return render_template('profile.html', user=current_user.username)
 
+def parse_dict_string(dict_string):
+    if not dict_string or dict_string == "{}":
+        return {}
+    dict_string = dict_string.strip('{}')  # Remove curly braces
+    items = dict_string.split(', ')  # Split into key-value pairs
+    parsed_dict = {}
+    for item in items:
+        key, value = item.split(': ')  # Split key and value
+        key = key.strip("'\"")  # Remove quotes around key
+        value = value.strip("'\"")  # Remove quotes around value
+        parsed_dict[key] = float(value) if value.replace('.', '', 1).isdigit() else value
+    return parsed_dict
+
+def dict_to_string(input_dict):
+    if not input_dict:
+        return "{}"
+    items = [f"'{key}': {value}" for key, value in input_dict.items()]
+    return "{" + ", ".join(items) + "}"
+
 @app.route('/setbudget', methods=['GET', 'POST'])
 def setBudget():
+
+    current_user_fin = UserFinances.query.get(int(current_user.id))
+
 
     if request.method == 'POST':
         income = request.form['MonthIncome']
@@ -94,7 +123,48 @@ def setBudget():
         for i in range(int(numGoals)):
             goals[request.form[f'{i + 1}saveName']] = request.form[f'{i + 1}saveCost']
 
-    return render_template('askForm.html')
+        if current_user_fin:
+            # Update existing entry
+            current_user_fin.income = float(income)
+            current_user_fin.savings = float(savings)
+            current_user_fin.bills = dict_to_string(bills)
+            current_user_fin.goals = dict_to_string(goals)
+        else:
+            # Create a new entry if none exists
+
+            fin = UserFinances(id=current_user.id, income=float(income), savings=float(savings),
+                               goals=dict_to_string(goals), bills=dict_to_string(bills))
+
+            db.session.add(fin)
+            current_user_fin = fin
+
+        db.session.commit()
+
+        return render_template(
+            'askForm1.html',
+            income = current_user_fin.income,
+            savings = current_user_fin.savings,
+            bills = parse_dict_string(current_user_fin.bills),
+            goals = parse_dict_string(current_user_fin.goals)
+        )
+
+
+    if current_user_fin is not None:
+        return render_template(
+            'askForm1.html',
+            income=current_user_fin.income,
+            savings=current_user_fin.savings,
+            bills= parse_dict_string(current_user_fin.bills),
+            goals=parse_dict_string(current_user_fin.goals)
+        )
+    else:
+        return render_template(
+            'askForm1.html',
+            income=0,
+            savings=0,
+            bills='',
+            goals='parse_dict_string(current_user.goals)'
+        )
 
 if __name__ == '__main__':
     # db.create_all()
