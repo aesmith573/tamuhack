@@ -7,7 +7,7 @@
    <!-- form for inputs   -->
 <p>Please input amount. (For example, 135.89)</p>
 
-    <form>
+    <form method="POST" action="/setbudget">
         <label for ="MonthIncome">How much money have you received this month?</label>
         <input type ="text" id="MonthIncome" name ="MonthIncome"><br><br>      
 
@@ -26,7 +26,7 @@
     
         <div class="saveContain" id="saveContain"></div>
 
-
+<button type='submit'>submit</button>
 <button type="button" onclick ="calculation()">Calculate</button>
     </form>
 <br><br>
