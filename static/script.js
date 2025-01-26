@@ -76,6 +76,26 @@ function calculation() {
     generateSavingsChart(savingsCategories, savingsAmounts);
 }
 
+function sendCalculationToServer(calculation) {
+    fetch('/store-calculation', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/plain' // Specify plain text content type
+        },
+        body: calculation // Send the string directly
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Calculation sent successfully');
+        } else {
+            console.error('Error sending calculation');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
 
 
   // Function to create or update the chart

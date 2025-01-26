@@ -34,9 +34,7 @@
             <input type="text" id="{{ loop.index }}saveCost" name="{{ loop.index }}saveCost" value="{{ goal_cost }}">
         {% endfor %}
     </div>
-
-    <button type='submit'>Submit</button>
-    <button type="button" onclick="calculation()">Calculate</button>
+    <button type="button" onclick="handleButtonClick()">Calculate</button>
 </form>
 <br><br>
 
@@ -46,5 +44,14 @@
 <canvas id="savingsChart" width="400" height="200"></canvas>
 
 <script src="../static/script.js"></script>
+<script>
+    function handleButtonClick() {
+        // Perform the calculation
+        calculation();
+
+        // Submit the form programmatically
+        document.querySelector('form').submit();
+    }
+</script>
 </body>
 {% endblock %}

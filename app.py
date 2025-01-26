@@ -112,16 +112,27 @@ def setBudget():
 
 
     if request.method == 'POST':
+        calculation = request.data.decode('utf-8')
         income = request.form['MonthIncome']
         savings = request.form['savings']
         numBills = request.form['NumBills']
+
         bills = {}
+        totalB = 0
+        totalS = 0
         for i in range(int(numBills)):
             bills[request.form[f'{i+1}BillName']] = request.form[f'{i+1}BillCost']
+            totalB += float(bills[request.form[f'{i+1}BillName']])
         numGoals = request.form['numSavings']
         goals = {}
         for i in range(int(numGoals)):
             goals[request.form[f'{i + 1}saveName']] = request.form[f'{i + 1}saveCost']
+            totalS += float(goals[request.form[f'{i + 1}saveName']])
+
+        current_user.leftovers = float(income)-totalB-float(savings)
+
+        print(current_user.leftovers)
+
 
         if current_user_fin:
             # Update existing entry
