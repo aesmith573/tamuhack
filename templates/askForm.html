@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
+
+{% block content %}
 <body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 
    <!-- form for inputs   -->
 <p>Please input amount. (For example, 135.89)</p>
@@ -12,7 +12,7 @@
         <input type ="text" id="MonthIncome" name ="MonthIncome"><br><br>      
 
         <label for ="NumBills">How many bills do you have to pay?</label>
-        <input type ="number" id="NumBills" name ="NumBills" min="1" placeholder ="Enter a number">
+        <input type ="number" id="NumBills" name ="NumBills" min="1" placeholder ="Enter a number" required>
 
         <div class="numContain" id="numContain"></div>
 
@@ -22,7 +22,7 @@
 
 
         <label for ="numSavings">How many categories do you want to split your savings into?</label>
-        <input type ="number" id="numSavings" name ="numSavings" min="1" placeholder ="Enter a number"> <br>
+        <input type ="number" id="numSavings" name ="numSavings" min="1" placeholder ="Enter a number" required> <br>
     
         <div class="saveContain" id="saveContain"></div>
 
@@ -35,9 +35,10 @@
 <!-- <p>Please input in percentages. (For example, for 40% input 40) </p> -->
 <p id="leftover"></p>
 
-
 <!-- chart element -->
 <canvas id="expenseChart" width="400" height="200"></canvas>
+<canvas id="savingsChart" width="400" height="200"></canvas>
+
 
 
 
@@ -45,4 +46,4 @@
 
 
 </body>
-</html>
+{% endblock %}
