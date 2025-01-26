@@ -49,58 +49,58 @@ function calculation() {
 
 
 //   // Function to create or update the chart
-//   function generateChart(labels, data, savings) {
-//     const ctx = document.getElementById('expenseChart').getContext('2d');
+  function generateChart(labels, data, savings) {
+    const ctx = document.getElementById('expenseChart').getContext('2d');
   
-//     if (chart) {
-//       chart.destroy();
-//     }
+    if (chart) {
+      chart.destroy();
+    }
   
-//     // Insert the savings value as a separate entry in the data array
-//     const updatedData = [...data, savings];  // Add savings at the end of the data array
+    // Insert the savings value as a separate entry in the data array
+    const updatedData = [...data, savings];  // Add savings at the end of the data array
   
-//     // Ensure the labels include "Savings" at the end
-//     const updatedLabels = [...labels, 'Savings'];  // Add 'Savings' as a new category
+    // Ensure the labels include "Savings" at the end
+    const updatedLabels = [...labels, 'Savings'];  // Add 'Savings' as a new category
   
-//     chart = new Chart(ctx, {
-//       type: 'bar',
-//       data: {
-//         labels: updatedLabels,  // Labels including "Savings"
-//         datasets: [
-//           {
-//             label: 'Bill Costs',
-//             data: updatedData,  // Updated data including savings
-//             backgroundColor: 'rgba(75, 192, 192, 0.2)',  // Light green for bills
-//             borderColor: 'rgba(75, 192, 192, 1)',
-//             borderWidth: 1
-//           },
-//           {
-//             label: 'Savings',
-//             data: new Array(labels.length).fill(0).concat(savings),  // Fill with 0 for bills and add savings at the end
-//             backgroundColor: 'rgba(255, 99, 132, 0.2)',  // Pink for savings
-//             borderColor: 'rgba(255, 99, 132, 1)',  // Pink for savings
-//             borderWidth: 1
-//           }
-//         ]
-//       },
-//       options: {
-//         scales: {
-//           x: {
-//             stacked: false  // Bars will be displayed side by side
-//           },
-//           y: {
-//             beginAtZero: true
-//           }
-//         },
-//         responsive: true,
-//         plugins: {
-//           legend: {
-//             position: 'top',
-//           }
-//         }
-//       }
-//     });
-//   }
+    chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: updatedLabels,  // Labels including "Savings"
+        datasets: [
+          {
+            label: 'Bill Costs',
+            data: updatedData,  // Updated data including savings
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',  // Light green for bills
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'Savings',
+            data: new Array(labels.length).fill(0).concat(savings),  // Fill with 0 for bills and add savings at the end
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',  // Pink for savings
+            borderColor: 'rgba(255, 99, 132, 1)',  // Pink for savings
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        scales: {
+          x: {
+            stacked: false  // Bars will be displayed side by side
+          },
+          y: {
+            beginAtZero: true
+          }
+        },
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          }
+        }
+      }
+    });
+  }
     
 
 
