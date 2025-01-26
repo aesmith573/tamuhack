@@ -20,11 +20,11 @@
         <label for ="savings">How much of your income do you want towards savings in general? </label>
         <input type ="text" id="savings" name ="savings"><br><br>
 
-    <label for="goalName">What is your savings goal?</label>
-    <input type="text" id="goalName" name="goalName" placeholder="Vacation, Emergency Fund, etc."><br><br>
 
-    <label for="goalAmount">Goal Amount:</label>
-    <input type="number" id="goalAmount" name="goalAmount" placeholder="Enter goal amount"><br><br> 
+        <label for ="numSavings">How many categories do you want to split your savings into?</label>
+        <input type ="number" id="numSavings" name ="numSavings" min="1" placeholder ="Enter a number"> <br>
+    
+        <div class="saveContain" id="saveContain"></div>
 
 
 <button type="button" onclick ="calculation()">Calculate</button>
