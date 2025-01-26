@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+import json
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -78,8 +79,21 @@ def logout():
 def profile():
     return render_template('profile.html', user=current_user.username)
 
-@app.route('/setbudget')
+@app.route('/setbudget', methods=['GET', 'POST'])
 def setBudget():
+
+    if request.method == 'POST':
+        income = request.form['MonthIncome']
+        savings = request.form['savings']
+        numBills = request.form['NumBills']
+        bills = {}
+        for i in range(int(numBills)):
+            bills[request.form[f'{i+1}BillName']] = request.form[f'{i+1}BillCost']
+        numGoals = request.form['numSavings']
+        goals = {}
+        for i in range(int(numGoals)):
+            goals[request.form[f'{i + 1}saveName']] = request.form[f'{i + 1}saveCost']
+
     return render_template('askForm.html')
 
 if __name__ == '__main__':
