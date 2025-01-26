@@ -139,7 +139,7 @@ def setBudget():
 
             print(current_user.leftovers)
 
-            calculation += f"Allocate {current_user.leftovers * percs[i]} to {request.form[f'{i + 1}saveName']}"
+            calculation += f"Allocate ${(current_user.leftovers * percs[i]):.2f} to {request.form[f'{i + 1}saveName']}\n"
 
         print(calculation)
 
@@ -168,6 +168,7 @@ def setBudget():
             bills = parse_dict_string(current_user_fin.bills),
             goals = parse_dict_string(current_user_fin.goals),
             calculation=calculation,
+            gif=True
         )
 
 
