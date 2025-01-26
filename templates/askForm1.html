@@ -39,6 +39,11 @@
 <br><br>
 
 <p id="leftover"></p>
+{% if calculation %}
+    <p>
+    {{ calculation }}
+    </p>
+{% endif %}
 
 <canvas id="expenseChart" width="400" height="200"></canvas>
 <canvas id="savingsChart" width="400" height="200"></canvas>

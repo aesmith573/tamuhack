@@ -125,13 +125,23 @@ def setBudget():
             totalB += float(bills[request.form[f'{i+1}BillName']])
         numGoals = request.form['numSavings']
         goals = {}
+        percs = []
         for i in range(int(numGoals)):
             goals[request.form[f'{i + 1}saveName']] = request.form[f'{i + 1}saveCost']
             totalS += float(goals[request.form[f'{i + 1}saveName']])
+            percs.append(float(goals[request.form[f'{i + 1}saveName']]))
 
-        current_user.leftovers = float(income)-totalB-float(savings)
+        current_user.leftovers = float(income) - totalB - float(savings)
 
-        print(current_user.leftovers)
+        for i in range(len(percs)):
+            percs[i] /= totalS
+            print(f"percentage{i}: {percs[i]}")
+
+            print(current_user.leftovers)
+
+            calculation += f"Allocate {current_user.leftovers * percs[i]} to {request.form[f'{i + 1}saveName']}"
+
+        print(calculation)
 
 
         if current_user_fin:
@@ -156,7 +166,8 @@ def setBudget():
             income = current_user_fin.income,
             savings = current_user_fin.savings,
             bills = parse_dict_string(current_user_fin.bills),
-            goals = parse_dict_string(current_user_fin.goals)
+            goals = parse_dict_string(current_user_fin.goals),
+            calculation=calculation,
         )
 
 
